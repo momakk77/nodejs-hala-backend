@@ -24,8 +24,8 @@ const sendEmail = asyncHandler(async (req, res) => {
         // port: 587,
         // secure: true,
         auth: {
-            user: 'makkalkrdi7770@gmail.com',
-            pass: 'busneggsxaecybfk'
+            user: 'hala.alabed19@gmail.com',
+            pass: 'ncauheuzuiyohphj'
         },
         service: "gmail"
 
@@ -34,7 +34,7 @@ const sendEmail = asyncHandler(async (req, res) => {
     transporter.sendMail({
 
         subject: `email from: ${req.body.name}`,
-        to: 'makkalkrdi7770@gmail.com',
+        to: 'hala.alabed19@gmail.com',
         html: `<p>${req.body.message}</p>`
     })
     res.json({ newEmail });

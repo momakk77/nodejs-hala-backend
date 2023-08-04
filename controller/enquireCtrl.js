@@ -97,8 +97,8 @@ const reSendEmail = asyncHandler(async (req, res) => {
         // port: 587,
         // secure: true,
         auth: {
-            user: 'makkalkrdi7770@gmail.com',
-            pass: 'busneggsxaecybfk'
+            user: 'hala.alabed19@gmail.com',
+            pass: 'ncauheuzuiyohphj'
         },
         service: "gmail"
 
