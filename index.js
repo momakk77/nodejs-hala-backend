@@ -9,6 +9,7 @@ const authRouter = require('./routes/authRoute');
 const imageRouter = require('./routes/imageRoute');
 const emailRouter = require('./routes/emailRoute');
 const enquireRouter = require('./routes/enquireRoute');
+const categoryRouter = require('./routes/categoryRoute');
 const { notFound, errorHandler } = require('./middlewares/errorHandler');
 const cookieParser = require('cookie-parser');
 const morgan = require('morgan');
@@ -20,19 +21,13 @@ app.use(bodyParser.urlencoded({extended : false}));
 app.use(cookieParser());
 
 app.use(express.static(__dirname + '/public'));
-
-// app.use((req, res, next) => {
-//     res.setHeader('Access-Control-Allow-Origin', '*');
-//     res.setHeader('Access-Control-Allow-Methods', 'content-type', 'Accept', 'Authorization');
-//     res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PATCH, DELETE');
-//     next();
-// });
 app.use(cors());
 
 app.use("/user", authRouter);
 app.use("/image", imageRouter);
 app.use("/email", emailRouter);
 app.use("/request", enquireRouter);
+app.use("/category", categoryRouter);
 
 
 app.use(notFound);
