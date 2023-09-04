@@ -9,11 +9,11 @@ var enquireSchema = new mongoose.Schema({
     email:{
         type: String,
         required: true,
-        unique: true
+        // unique: true
     },
     phone: {
         type: String,
-        unique: true
+        // unique: true
     },
     message:{
         type: String,
