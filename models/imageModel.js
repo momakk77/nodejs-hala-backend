@@ -17,7 +17,13 @@ var imageSchema = new mongoose.Schema({
     },
     category:{
         type: String,
-        //required: true
+        required: true
+    },
+    sizeInch:{
+        type: String,
+    },
+    Framed:{
+        type: String,
     },
     imagePath:{
         type: String,
