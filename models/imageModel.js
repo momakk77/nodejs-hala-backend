@@ -22,7 +22,7 @@ var imageSchema = new mongoose.Schema({
     sizeInch:{
         type: String,
     },
-    Framed:{
+    framed:{
         type: String,
     },
     imagePath:{
