@@ -67,16 +67,27 @@ const getaImage = asyncHandler(async (req, res) => {
 //get all products
 const getAllImages = asyncHandler(async (req, res) => {
     try {
+        // Find the first category based on "index"
+        const firstCategory = await Category.findOne({}, 'category', { sort: { index: 1 } });
+
+        if (!firstCategory) {
+            // Handle the case where no category is found
+            res.status(404).json({ message: "No categories found." });
+            return;
+        }
+
         // Filter Out Products
         const queryObj = { ...req.query };
-        if (!queryObj.category || queryObj.category == "All") {
-            delete queryObj.category
-        }
         const excludeFields = ["page", "limit", "fields"];
         excludeFields.forEach((el) => delete queryObj[el]);
         let queryStr = JSON.stringify(queryObj);
         queryStr = queryStr.replace(/\b(gte|gt|lte|lt)\b/g, (match) => `$${match}`);
-        let query = Image.find(JSON.parse(queryStr));
+
+        // Update the query to filter based on the first category
+        let query = Image.find({
+            ...JSON.parse(queryStr),
+            category: firstCategory.category,
+        });
 
         // Sort the images based on the "index" field as a number
         query = query.sort({ index: 1 }); // 1 for ascending order, -1 for descending order
@@ -100,6 +111,7 @@ const getAllImages = asyncHandler(async (req, res) => {
         throw new Error(error);
     }
 });
+
 
 
 //update a product
