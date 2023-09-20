@@ -72,12 +72,14 @@ const getAllImages = asyncHandler(async (req, res) => {
         if (!queryObj.category || queryObj.category == "All") {
             delete queryObj.category
         }
-        const excludeFields = ["page", "sort", "limit", "fields"];
+        const excludeFields = ["page", "limit", "fields"];
         excludeFields.forEach((el) => delete queryObj[el]);
         let queryStr = JSON.stringify(queryObj);
         queryStr = queryStr.replace(/\b(gte|gt|lte|lt)\b/g, (match) => `$${match}`);
         let query = Image.find(JSON.parse(queryStr));
 
+        // Sort the images based on the "index" field as a number
+        query = query.sort({ index: 1 }); // 1 for ascending order, -1 for descending order
 
         const page = req.query.page;
         const limit = req.query.limit;
@@ -85,20 +87,20 @@ const getAllImages = asyncHandler(async (req, res) => {
         query = query.skip(skip).limit(limit);
         if (req.query.page) {
             const imageCount = await Image.countDocuments();
-            if (skip >= imageCount) throw new Error("This Page does not exists");
+            if (skip >= imageCount) throw new Error("This Page does not exist");
         }
 
-        const image = await query;
-        [...image].map((img) => {
+        const images = await query;
+        images.forEach((img) => {
             img.imagePath = img.imagePath.replace("public", "api");
-            return img;
         });
 
-        res.json(image);
+        res.json(images);
     } catch (error) {
         throw new Error(error);
     }
 });
+
 
 //update a product
 const updateImage = asyncHandler(async (req, res) => {

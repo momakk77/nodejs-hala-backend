@@ -6,6 +6,11 @@ var categorySchema = new mongoose.Schema({
         type: String,
         //required: false
     },
+    index:{
+        type: Number,
+        required: true,
+        // trim: true
+    },
 },{timestamps: true});
 
 

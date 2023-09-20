@@ -7,6 +7,11 @@ var imageSchema = new mongoose.Schema({
         // required: true,
         // trim: true
     },
+    index:{
+        type: Number,
+        required: true,
+        // trim: true
+    },
     size:{
         type: String,
         //required: true,
