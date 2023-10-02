@@ -60,8 +60,8 @@ const getaImage = asyncHandler(async (req, res) => {
 
         findImage.imagePath = findImage.imagePath.replace('public', 'api');
 
-        const prevImage = await Image.findOne({ _id: { $lt: id }, category: category }).sort({ _id: -1 });
-        const nextImage = await Image.findOne({ _id: { $gt: id }, category: category }).sort({ _id: 1 });
+        const prevImage = await Image.findOne({ index: { $lt: findImage.index }, category: category }).sort({ index: -1 });
+        const nextImage = await Image.findOne({ index: { $gt: findImage.index }, category: category }).sort({ index: 1 });
 
         res.json({
             data: findImage,
