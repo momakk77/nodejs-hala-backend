@@ -49,20 +49,31 @@ const createImage = asyncHandler(async (req, res) => {
 // get a product
 const getaImage = asyncHandler(async (req, res) => {
     const { id } = req.params;
+    const { category } = req.query; 
+
     try {
-        const findImage = await Image.findById(id);
-        findImage.imagePath = findImage.imagePath.replace("public", "api");
-        const prevImage = await Image.findOne({ _id: { $lt: id } }).sort({ _id: -1 });
-        const nextImage = await Image.findOne({ _id: { $gt: id } }).sort({ _id: 1 });
+        const findImage = await Image.findOne({ _id: id, category: category });
+
+        if (!findImage) {
+            return res.status(404).json({ message: 'Image not found' });
+        }
+
+        findImage.imagePath = findImage.imagePath.replace('public', 'api');
+
+        const prevImage = await Image.findOne({ _id: { $lt: id }, category: category }).sort({ _id: -1 });
+        const nextImage = await Image.findOne({ _id: { $gt: id }, category: category }).sort({ _id: 1 });
+
         res.json({
             data: findImage,
             nextImageId: nextImage?._id,
             prevImageId: prevImage?._id
         });
     } catch (error) {
-        throw new Error(error);
+        console.error(error);
+        res.status(500).json({ message: 'Internal Server Error' });
     }
 });
+
 
 //get all products
 const getAllImages = asyncHandler(async (req, res) => {
