@@ -52,7 +52,7 @@ const getaImage = asyncHandler(async (req, res) => {
     const { category } = req.query; 
 
     try {
-        const findImage = await Image.findOne({ _id: id, category: category });
+        const findImage = await Image.findOne({ _id: id});
 
         if (!findImage) {
             return res.status(404).json({ message: 'Image not found' });
